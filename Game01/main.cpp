@@ -17,9 +17,8 @@ int main(void)
 	
 	// initialize glew
 	GLenum err = glewInit();
-	std::string ver;
 
-	//logger.info(str::string(glGetString(GL_SHADING_LANGUAGE_VERSION)));
+	const GLubyte* ver = glGetString(GL_SHADING_LANGUAGE_VERSION);
 	ShaderProgram shader;
 
 	/* Loop until the user closes the window */

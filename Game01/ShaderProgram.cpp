@@ -18,13 +18,23 @@ unsigned int ShaderProgram::loadShader(const std::string & filepath, const GLenu
 	
 	unsigned int shaderID = glCreateShader(type);
 	
-	std::fstream file(filepath);
+	std::fstream file;
+
+	try{
+		file.open(filepath);
+	}
+	catch (std::exception e){
+		logger.error(e.what());
+	}
+
 	std::string line;
 	
 	// read shader sourcer from file
 	while (std::getline(file, line)) {
-		source << line;
+		source << line << "\n";
 	}
+	
+	file.close();
 
 	std::string str_source = source.str();
 	const char* source_c = str_source.c_str();
@@ -44,6 +54,10 @@ unsigned int ShaderProgram::loadShader(const std::string & filepath, const GLenu
 		glGetShaderInfoLog(shaderID, 512, NULL, infoLog);
 		logger.error("compiling shader failer!");
 		logger.error(infoLog);
+	}
+	else
+	{
+		logger.info("shader compilation successfull.");
 	}
 
 	return shaderID;
