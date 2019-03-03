@@ -3,7 +3,6 @@
 
 ShaderProgram::ShaderProgram()
 {
-	
 	loadShader(VERTEX_SHADER_FILE, GL_VERTEX_SHADER);
 	loadShader(FRAGMENT_SHADER_FILE, GL_FRAGMENT_SHADER);
 }
@@ -27,7 +26,8 @@ unsigned int ShaderProgram::loadShader(const std::string & filepath, const GLenu
 		source << line;
 	}
 
-	const char* source_c = source.str().c_str();
+	std::string str_source = source.str();
+	const char* source_c = str_source.c_str();
 
 	// bind shader source
 	glShaderSource(shaderID, 1, &source_c, NULL);
@@ -42,10 +42,9 @@ unsigned int ShaderProgram::loadShader(const std::string & filepath, const GLenu
 	
 	if (!success) {
 		glGetShaderInfoLog(shaderID, 512, NULL, infoLog);
-		std::cout << "error compiling shader!" << std::endl << infoLog << std::endl;
-		return -1;
+		logger.error("compiling shader failer!");
+		logger.error(infoLog);
 	}
 
 	return shaderID;
-
 }
