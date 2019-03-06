@@ -12,6 +12,12 @@ public:
 	ShaderProgram();
 	~ShaderProgram();
 	unsigned int loadShader(const std::string& filepath, const GLenum& type);
+	unsigned int createProgram();
+	void startShader();
+	void stopShader();
+
+	//getters
+	unsigned int getProgramID() const { return programID; }
 
 private:
 	Logger logger = Logger("ShaderProgram");

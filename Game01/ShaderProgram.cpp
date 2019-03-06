@@ -3,8 +3,9 @@
 
 ShaderProgram::ShaderProgram()
 {
-	loadShader(VERTEX_SHADER_FILE, GL_VERTEX_SHADER);
-	loadShader(FRAGMENT_SHADER_FILE, GL_FRAGMENT_SHADER);
+	vertexShaderID = loadShader(VERTEX_SHADER_FILE, GL_VERTEX_SHADER);
+	fragmentShaderID = loadShader(FRAGMENT_SHADER_FILE, GL_FRAGMENT_SHADER);
+	programID = createProgram();
 }
 
 
@@ -61,4 +62,44 @@ unsigned int ShaderProgram::loadShader(const std::string & filepath, const GLenu
 	}
 
 	return shaderID;
+}
+
+unsigned int ShaderProgram::createProgram()
+{
+	unsigned int shaderProgram;
+	shaderProgram = glCreateProgram();
+
+	glAttachShader(shaderProgram, vertexShaderID);
+	glAttachShader(shaderProgram, fragmentShaderID);
+	glLinkProgram(shaderProgram);
+	
+	int success;
+	
+	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+
+	if (!success) {
+		char infoLog[512];
+		logger.error("linking shader program failed!");
+		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+		logger.error(infoLog);
+		return -1;
+	}
+
+	// shaders should be deleted after linkage
+	glDeleteShader(vertexShaderID);
+	glDeleteShader(fragmentShaderID);
+
+	logger.debug("linked shader program successfully!");
+	
+	return shaderProgram;
+}
+
+void ShaderProgram::startShader()
+{
+	glUseProgram(programID);
+}
+
+void ShaderProgram::stopShader()
+{
+	glUseProgram(0);
 }

@@ -1,10 +1,12 @@
 #pragma once
-#include <GLFW/glfw3.h>
+#include "RawModel.h"
+#include "ShaderProgram.h"
+
 class Renderer
 {
 public:
-	Renderer();
 	~Renderer();
 	void prepare();
+	void render(const RawModel& model, const ShaderProgram& shader);
 };
 
