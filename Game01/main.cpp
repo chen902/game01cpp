@@ -65,5 +65,6 @@ int main(void)
 	loader.cleanUp();
 	display.destroyDisplay();
 
+	logger.stop();
 	return 0;
 }
