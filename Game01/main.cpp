@@ -5,6 +5,11 @@
 #include "ShaderProgram.h"
 #include "Logger.h"
 #include "Loader.h"
+#include "Entity.h"
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include "Camera.h"
 
 int main(void)
 {
@@ -18,15 +23,16 @@ int main(void)
 	GLenum err = glewInit();
 
 	// initialize rendering stuff
-	Renderer renderer;
+	
 	Loader loader;
 	ShaderProgram shader;
+	Renderer renderer(shader);
 
 	float vertices[] = {
-	 0.9f,  0.9f, 0.0f,  // top right
-	 0.9f,  0.1f, 0.0f,  // bottom right
-	 0.1f,  0.1f, 0.0f,  // bottom left
-	 0.1f,  0.9f, 0.0f   // top left 
+	 0.5f,  0.5f, 0.0f,  // top right
+	 0.5f, -0.5f, 0.0f,  // bottom right
+	 -0.5f, -0.5f, 0.0f,  // bottom left
+	 -0.5f,  0.5f, 0.0f   // top left 
 	};
 	
 	unsigned int indices[] = {  // note that we start from 0!
@@ -42,7 +48,11 @@ int main(void)
 	};
 
 	RawModel& model = loader.loadToVAO(indices, sizeof(indices), vertices, sizeof(vertices));
-	RawModel& model2 = loader.loadToVAO(indices, sizeof(indices), vertices2, sizeof(vertices2));
+	//RawModel& model2 = loader.loadToVAO(indices, sizeof(indices), vertices2, sizeof(vertices2));
+
+	Entity entity(model, glm::vec3(0.0f, 0.0f, 0.0f));
+
+	Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -51,9 +61,9 @@ int main(void)
 		/* Render here */
 		renderer.prepare();
 
-		renderer.render(model, shader);
-		renderer.render(model2, shader);
+		shader.loadViewlMatrix(camera);
 
+		renderer.render(entity);
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 

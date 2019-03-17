@@ -28,7 +28,7 @@ GLFWwindow* DisplayManager::createDisplay()
 
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
-	glViewport(0, 0, 800, 600);
+	glViewport(0, 0, DISP_WIDTH, DISP_HEIGHT);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
 	// get rid of this
@@ -42,6 +42,6 @@ void DisplayManager::destroyDisplay()
 
 void framebuffer_size_callback(GLFWwindow * window, int width, int height)
 {
-	std::cout << "resize!" << std::endl;
+	std::cout << "width: " << width << " height: " << height << std::endl;
 	glViewport(0, 0, width, height);
 }

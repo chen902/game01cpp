@@ -13,15 +13,8 @@ public:
 
 private:
 	GLFWwindow* window;
-	unsigned int const DISP_WIDTH = 800;
-	unsigned int const DISP_HEIGHT = 600;
-
-	class FrameBufferSizeCallback {
-		void operator()(GLFWwindow* window, int width, int height) {
-			std::cout << "resize!" << std::endl;
-			glViewport(0, 0, width, height);
-		}
-	};
+	unsigned int const DISP_WIDTH = 1024;
+	unsigned int const DISP_HEIGHT = 768;
 };
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);

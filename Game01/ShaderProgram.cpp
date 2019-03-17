@@ -3,9 +3,16 @@
 
 ShaderProgram::ShaderProgram()
 {
+	logger.debug("compiling vertex shader..");
 	vertexShaderID = loadShader(VERTEX_SHADER_FILE, GL_VERTEX_SHADER);
+	
+	logger.debug("compiling fragment shader..");
 	fragmentShaderID = loadShader(FRAGMENT_SHADER_FILE, GL_FRAGMENT_SHADER);
+	
+	logger.debug("linking shader program..");
 	programID = createProgram();
+
+	getAllUniformLocations();
 }
 
 
@@ -102,4 +109,39 @@ void ShaderProgram::startShader()
 void ShaderProgram::stopShader()
 {
 	glUseProgram(0);
+}
+
+void ShaderProgram::loadViewlMatrix(const Camera & camera) const
+{
+	glm::mat4 view = Transformations::createViewMatrix(camera);
+	loadMatrix(locationViewMatrix, view);
+}
+
+void ShaderProgram::loadModelMatrix(const glm::mat4& matrix) const
+{
+	loadMatrix(locationModelMatrix, matrix);
+}
+
+void ShaderProgram::loadProjectionMatrix(const glm::mat4 & matrix) const
+{
+	loadMatrix(locationProjectionMatrix, matrix);
+}
+
+void ShaderProgram::getAllUniformLocations()
+{
+	locationModelMatrix = getUniformLocation("model_matrix");
+	locationViewMatrix = getUniformLocation("view_matrix");
+	locationProjectionMatrix = getUniformLocation("projection_matrix");
+}
+
+int ShaderProgram::getUniformLocation(const std::string & name)
+{
+	int location = glGetUniformLocation(programID, name.c_str());
+	return location;
+}
+
+/* Loads a matrix to uniform with location in shader program */
+void ShaderProgram::loadMatrix(int location, const glm::mat4 & matrix) const
+{
+	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
