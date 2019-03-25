@@ -8,7 +8,7 @@
 class Renderer
 {
 public:
-	Renderer(ShaderProgram& shader);
+	Renderer(ShaderProgram& shader, const DisplayManager& display);
 	~Renderer();
 	void prepare();
 	void render(const Entity& entity);
@@ -16,6 +16,7 @@ public:
 private:
 	glm::mat4 projection;
 	ShaderProgram& shader;
+	const DisplayManager& display;
 
 	void creatProjectionMatrix();
 	void loadProjectionMatrix();

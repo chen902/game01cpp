@@ -1,6 +1,7 @@
 #include "DisplayManager.h"
 
-
+int DisplayManager::curr_width = 0;
+int DisplayManager::curr_height = 0;
 
 DisplayManager::DisplayManager()
 {
@@ -14,6 +15,9 @@ DisplayManager::~DisplayManager()
 
 GLFWwindow* DisplayManager::createDisplay()
 {
+	DisplayManager::curr_width = DISP_WIDTH;
+	DisplayManager::curr_height = DISP_HEIGHT;
+
 	/* Initialize the library */
 	if (!glfwInit())
 		throw std::exception();
@@ -42,6 +46,9 @@ void DisplayManager::destroyDisplay()
 
 void framebuffer_size_callback(GLFWwindow * window, int width, int height)
 {
+	DisplayManager::curr_width = width;
+	DisplayManager::curr_height = height;
+
 	std::cout << "width: " << width << " height: " << height << std::endl;
 	glViewport(0, 0, width, height);
 }

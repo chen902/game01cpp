@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-Renderer::Renderer(ShaderProgram& shader) : shader(shader)
+Renderer::Renderer(ShaderProgram& shader, const DisplayManager& display) : shader(shader), display(display)
 {
 	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
@@ -37,7 +37,7 @@ void Renderer::render(const Entity& entity)
 void Renderer::creatProjectionMatrix()
 {
 	// TODO: figure away to the the windows size here	
-	projection = glm::perspective(glm::radians(45.5f),  1024.0f/ 768.0f , 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(45.5f),  (float)display.curr_width / (float)display.curr_height , 0.1f, 100.0f);
 }
 
 void Renderer::loadProjectionMatrix()
