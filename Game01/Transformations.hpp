@@ -20,9 +20,13 @@ public:
 
 	static glm::mat4 createViewMatrix(const Camera& camera) {
 		glm::mat4 view = glm::mat4(1.0f);
+		
+		view = glm::rotate(view, glm::radians(camera.getPitch()), glm::vec3(1.0f, 0.0f, 0.0f));
+		view = glm::rotate(view, glm::radians(camera.getYaw()), glm::vec3(0.0f, 1.0f, 0.0f));
+		
 		glm::vec3 pos = camera.getPosition();
 		view = glm::translate(view, glm::vec3(-pos.x, -pos.y, -pos.z));
-		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+		
 		return view;
 	}
 };
