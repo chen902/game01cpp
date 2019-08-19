@@ -43,13 +43,15 @@ int main(void)
 	RawModel& model = loader.loadToVAO(indices, sizeof(indices), vertices, sizeof(vertices));
 	//RawModel& model2 = loader.loadToVAO(indices, sizeof(indices), vertices2, sizeof(vertices2));
 
-	Entity entity(model, glm::vec3(0.0f, 0.0f, 0.0f));
+	Entity entity(model, glm::vec3(0.0f, 0.0f, 0.0f), -55.0f,0.0f,0.0f, 0.5f);
+	
 
 	Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
+		entity.increaseRotation(0.1f, 0.0f, 0.0f);
 		shader.startShader();
 		/* Render here */
 		renderer.prepare();

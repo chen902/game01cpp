@@ -1,7 +1,13 @@
 #include "Entity.h"
 
 
-Entity::Entity(RawModel & model, glm::vec3 position) : model(model), position(position)
+Entity::Entity(RawModel & model, glm::vec3 position, float rotX, float rotY, float rotZ, float scale) : 
+	model(model), 
+	position(position), 
+	rotX(rotX), 
+	rotY(rotY),
+	rotZ(rotZ),
+	scale(scale)
 {
 
 }
