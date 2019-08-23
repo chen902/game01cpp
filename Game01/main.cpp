@@ -10,6 +10,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include "Camera.h"
+#include "OBJLoader.hpp"
 
 int main(void)
 {
@@ -28,30 +29,16 @@ int main(void)
 	ShaderProgram shader;
 	Renderer renderer(shader, display);
 
-	float vertices[] = {
-	 0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	 -0.5f, -0.5f, 0.0f,  // bottom left
-	 -0.5f,  0.5f, 0.0f   // top left 
-	};
+	RawModel& m = OBJLoader::loadObjModel("cube.obj", loader);
 	
-	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
+	Entity entity(m, glm::vec3(0.0f, 0.0f, 0.0f), -55.0f,0.0f,0.0f, 0.5f);
 
-	RawModel& model = loader.loadToVAO(indices, sizeof(indices), vertices, sizeof(vertices));
-	//RawModel& model2 = loader.loadToVAO(indices, sizeof(indices), vertices2, sizeof(vertices2));
-
-	Entity entity(model, glm::vec3(0.0f, 0.0f, 0.0f), -55.0f,0.0f,0.0f, 0.5f);
-	
-
-	Camera camera(glm::vec3(0.0f, 0.0f, 3.0f), 1.0f,1.0f,1.0f);
+	Camera camera(glm::vec3(0.0f, 0.0f, 30.0f), 1.0f,1.0f,1.0f);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
-		//entity.increaseRotation(0.1f, 0.0f, 0.0f);
+		entity.increaseRotation(0.0f, 0.1f, 0.0f);
 
 		shader.startShader();
 		/* Render here */
