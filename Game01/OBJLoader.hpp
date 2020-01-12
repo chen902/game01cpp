@@ -19,6 +19,7 @@ public:
 
 		std::vector <glm::vec3> vertices;
 		std::vector<unsigned int> indices;
+		std::vector<glm::vec2> textures;
 
 		std::getline(file, line);
 		std::string header = line.substr(0, 2);
@@ -28,12 +29,13 @@ public:
 
 		// read vertices
 		while (header != "f ") {
-			values = Utilities::split(' ', line.substr(2, line.length()));
+			size_t i = line.find(" ");
+			values = Utilities::split(' ', line.substr(i+1, line.length()));
 			if (header == "v ") {
 				vertices.push_back(glm::vec3(std::stof(values[0]), std::stof(values[1]), std::stof(values[2])));
 			}
 			else if (header == "vt") {
-
+				textures.push_back(glm::vec2(std::stof(values[0]), std::stof(values[1])));
 			}
 			else if (header == "vn") {
 
@@ -82,7 +84,17 @@ public:
 			indices_arr[i] = indices.at(i);
 		}
 
-		RawModel& r = loader.loadToVAO(indices_arr, sizeof(unsigned int)*indices.size(), vertices_arr, sizeof(float)*vertices.size()*3);
+		float* textures_arr = new float[textures.size() * 2];
+
+		for (size_t i = 0; i < textures.size(); ++i) {
+			textures_arr[i*2] = textures.at(i).x;
+			textures_arr[i * 2 + 1] = textures.at(i).y;
+		}
+
+		RawModel& r = loader.loadToVAO(
+			indices_arr, sizeof(unsigned int)*indices.size(), 
+			vertices_arr, sizeof(float)*vertices.size()*3, 
+			textures_arr, sizeof(float)*textures.size()*2);
 
 		delete[] vertices_arr;
 		delete[] indices_arr;

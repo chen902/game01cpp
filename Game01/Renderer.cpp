@@ -23,14 +23,24 @@ void Renderer::prepare()
 
 void Renderer::render(const Entity& entity)
 {
-	glBindVertexArray(entity.getModel().getVaoID()); // bind vao
+	RawModel& model = entity.getRawModel();
+	ModelTexture& texture = entity.getTexture();
+
+	glBindVertexArray(model.getVaoID()); // bind vao
 	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 	
 	// positions the entity in the 3d world
 	glm::mat4 modelMatrix = Transformations::createModelMatrix(entity);
 	shader.loadModelMatrix(modelMatrix);
 
-	glDrawElements(GL_TRIANGLES, entity.getModel().getVerticesCount(), GL_UNSIGNED_INT, 0);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
+
+	glDrawElements(GL_TRIANGLES, model.getVerticesCount(), GL_UNSIGNED_INT, 0);
+	
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
 	glBindVertexArray(0); // unbind vao
 }
 

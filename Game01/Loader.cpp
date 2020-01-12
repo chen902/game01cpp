@@ -4,14 +4,45 @@ Loader::~Loader()
 {
 }
 
-RawModel & Loader::loadToVAO(const unsigned int* indices, size_t indicesSize, const float * vertices, size_t verticesSize)
+RawModel & Loader::loadToVAO(const unsigned int* indices, size_t indicesSize, const float * vertices, size_t verticesSize, const float* textureCoordinates, size_t textureCoordSize)
 {
 	// create and bind
 	unsigned int vao = createVAO();
 	bindIndicesBuffer(indices, indicesSize);
 	storeDataInAttribList(0, 3, vertices, verticesSize);
+	storeDataInAttribList(1, 2, textureCoordinates, textureCoordSize);
 	unbindVAO();
 	return *(new RawModel(vao, indicesSize / sizeof(unsigned int)));  // indicesSize / sizeof(unsigned int) = actual number of vertices rendered
+}
+
+
+unsigned int Loader::loadTexture(const std::string & filepath){
+	
+	unsigned int textureID;
+	glGenTextures(1, &textureID);
+	glBindTexture(GL_TEXTURE_2D, textureID);
+	// set the texture wrapping/filtering options (on the currently bound texture object)
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int width, height, nrChannels;
+	unsigned char *data = stbi_load(filepath.c_str(), &width, &height, &nrChannels, 0);
+	if (data)
+	{
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		return -1;
+	}
+
+	stbi_image_free(data);
+	
+
+	return textureID;
 }
 
 unsigned int Loader::createVAO()
@@ -42,7 +73,7 @@ void Loader::storeDataInAttribList(const int & attribNum, const size_t & stride,
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
 	glBufferData(GL_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
-	glVertexAttribPointer(attribNum, stride, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(attribNum, stride, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(attribNum);
 }
 

@@ -4,14 +4,16 @@
 #pragma once
 #include <glm/vec3.hpp>
 #include "RawModel.h"
+#include "TexturedModel.h"
 
 class Entity
 {
 public:
-	Entity(RawModel& model, glm::vec3 position, float rotX, float rotY, float rotZ, float scale);
+	Entity(TexturedModel& model, glm::vec3 position, float rotX, float rotY, float rotZ, float scale);
 	~Entity();
 	glm::vec3 getPosition() const { return position; };
-	RawModel& getModel() const { return model; };
+	RawModel& getRawModel() const { return model.getModel(); };
+	ModelTexture& getTexture() const { return model.getTexture(); };
 	float getRotX() const { return this->rotX; }
 	float getRotY() const { return this->rotY; }
 	float getRotZ() const { return this->rotZ; }
@@ -21,7 +23,7 @@ public:
 
 
 private:
-	RawModel& model;
+	TexturedModel& model;
 	glm::vec3 position;
 	float rotX;
 	float rotY;

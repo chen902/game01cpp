@@ -11,6 +11,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Camera.h"
 #include "OBJLoader.hpp"
+#include "ModelTexture.h"
+#include "TexturedModel.h"
+
 
 int main(void)
 {
@@ -30,8 +33,11 @@ int main(void)
 	Renderer renderer(shader, display);
 
 	RawModel& m = OBJLoader::loadObjModel("cube.obj", loader);
+	ModelTexture& t = *(new ModelTexture(loader.loadTexture("res\\wall.jpg")));
+
+	TexturedModel& tm = *(new TexturedModel(t, m));
 	
-	Entity entity(m, glm::vec3(0.0f, 0.0f, 0.0f), -55.0f,0.0f,0.0f, 0.5f);
+	Entity entity(tm, glm::vec3(0.0f, 0.0f, 0.0f), -55.0f,0.0f,0.0f, 0.5f);
 
 	Camera camera(glm::vec3(0.0f, 0.0f, 30.0f), 1.0f,1.0f,1.0f);
 

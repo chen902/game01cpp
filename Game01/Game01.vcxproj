@@ -124,29 +124,49 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DisplayManager.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="GraphicsManager.cpp" />
     <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ModelTexture.cpp" />
+    <ClCompile Include="OpenGLGraphics.cpp" />
+    <ClCompile Include="PhysicsManager.cpp" />
     <ClCompile Include="RawModel.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="TexturedModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DisplayManager.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="GraphicsManager.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="ModelTexture.h" />
     <ClInclude Include="OBJLoader.hpp" />
+    <ClInclude Include="OpenGLGraphics.h" />
+    <ClInclude Include="PhysicsManager.h" />
     <ClInclude Include="RawModel.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="TexturedModel.h" />
     <ClInclude Include="Transformations.hpp" />
     <ClInclude Include="Utilities.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="fragmentShader.txt" />
     <Text Include="vertexShader.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Game01.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
