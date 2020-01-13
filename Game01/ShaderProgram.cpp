@@ -43,10 +43,18 @@ void ShaderProgram::getAllUniformLocations()
 	locationProjectionMatrix = getUniformLocation("projection_matrix");
 	locationLightPosition = getUniformLocation("light_position");
 	locationLightColor = getUniformLocation("light_color");
+	locationShineDampner = getUniformLocation("shine_damper");
+	locationReflectivity = getUniformLocation("refelectivity");
 }
 
 void ShaderProgram::loadLight(const Light & light)
 {
 	this->loadVec3(this->locationLightPosition, light.getPosition());
 	this->loadVec3(this->locationLightColor, light.getColor());
+}
+
+void ShaderProgram::loadSpecularLight(float shineDampner, float reflectivity) const
+{
+	this->loadFloat(this->locationShineDampner, shineDampner);
+	this->loadFloat(this->locationReflectivity, reflectivity);
 }

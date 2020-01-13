@@ -32,5 +32,6 @@ protected:
 	int getUniformLocation(const std::string & name);
 	void loadMatrix(int location, const glm::mat4 & matrix) const;
 	void loadVec3(int location, glm::vec3 vector) const;
+	void loadFloat(int location, float value) const;
 };
 

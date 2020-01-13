@@ -44,7 +44,9 @@ void GameWorld::createEntities()
 {
 	this->camera = new Camera(glm::vec3(0.0f, 10.0f, 0.0f), 10.0f, 0.0f, 0.0f);
 	RawModel& m = OBJLoader::loadObjModel("plane.obj", *this->loader);
-	ModelTexture& t = *(new ModelTexture(this->loader->loadTexture("res\\wall.jpg")));
+	ModelTexture& t = *(new ModelTexture(this->loader->loadTexture("res\\paper.jpg")));
+	t.setReflectivity(5.0f);
+	t.setShineDamper(10.f);
 
 	TexturedModel& tm = *(new TexturedModel(t, m));
 
@@ -95,11 +97,24 @@ void GameWorld::handleUserInput()
 		this->camera->increasePitch(SPEED);
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT)) {
-		this->camera->increaseRoll(SPEED);
+		this->camera->increaseYaw(SPEED);
 	}
 	if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
-		this->camera->increaseRoll(-SPEED);
+		this->camera->increaseYaw(-SPEED);
 	}
+	if (glfwGetKey(window, GLFW_KEY_G)) {
+		this->light->increasePosX(SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_H)) {
+		this->light->increasePosX(-SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_V)) {
+		this->light->increasePosY(SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_B)) {
+		this->light->increasePosY(-SPEED);
+	}
+
 
 
 }

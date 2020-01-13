@@ -41,6 +41,8 @@ void Renderer::render(const Entity& entity)
 	glm::mat4 modelMatrix = Transformations::createModelMatrix(entity);
 	shader.loadModelMatrix(modelMatrix);
 
+	shader.loadSpecularLight(texture.getShineDamper(), texture.getReflectivity());
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
 

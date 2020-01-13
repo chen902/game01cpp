@@ -23,6 +23,7 @@ public:
 	void loadProjectionMatrix(const glm::mat4& matrix) const;
 	void getAllUniformLocations();
 	void loadLight(const Light& light);
+	void loadSpecularLight(float shineDampner, float reflectivity) const;
 
 	//getters
 	unsigned int getProgramID() const { return programID; }
@@ -35,6 +36,8 @@ private:
 	int locationProjectionMatrix;
 	int locationLightPosition;
 	int locationLightColor;
+	int locationShineDampner;
+	int locationReflectivity;
 	
 	const char* VERTEX_SHADER_FILE = "vertexShader.txt";
 	const char* FRAGMENT_SHADER_FILE = "fragmentShader.txt";

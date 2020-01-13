@@ -7,6 +7,7 @@ layout (location = 2) in vec3 aNormal;
 out vec2 TexCoord;
 out vec3 surfaceNormal;
 out vec3 toLightSource;
+out vec3 toCamera;
 
 uniform mat4 model_matrix;
 uniform mat4 view_matrix;
@@ -22,4 +23,6 @@ void main()
 
 	surfaceNormal = (model_matrix * vec4(aNormal, 0.0)).xyz;
 	toLightSource = light_position - worldPosition.xyz;
+
+	toCamera = (inverse(model_matrix) * vec4(0.0,0.0,0.0,1.0)).xyz - worldPosition.xyz;
 }

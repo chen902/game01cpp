@@ -121,3 +121,8 @@ void StaticShader::loadVec3(int location, glm::vec3 vector) const
 {
 	glUniform3f(location, vector.x, vector.y, vector.z);
 }
+
+void StaticShader::loadFloat(int location, float value) const
+{
+	glUniform1f(location, value);
+}
