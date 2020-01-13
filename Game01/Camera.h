@@ -17,9 +17,14 @@ public:
 	float getRoll() const { return this->roll; };
 	float getYaw() const { return this->yaw; };
 
+	void increasePosX(float val);
+	void increasePosY(float val);
+	void increasePosZ(float val);
+	
 	void increasePitch(float val);
 	void increaseRoll(float val);
 	void increaseYaw(float val);
+
 
 private:
 	glm::vec3 position;

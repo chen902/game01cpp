@@ -63,6 +63,41 @@ void GameWorld::mainLoop()
 
 void GameWorld::handleUserInput()
 {
+	static float SPEED = 0.05f;
+	glfwPollEvents();
+	
+	if (glfwGetKey(this->window, GLFW_KEY_W)) {
+		this->camera->increasePosZ(-SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_S)) {
+		this->camera->increasePosZ(SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_A)) {
+		this->camera->increasePosX(-SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_D)) {
+		this->camera->increasePosX(SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT)) {
+		this->camera->increasePosY(SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL)) {
+		this->camera->increasePosY(-SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_UP)) {
+		this->camera->increasePitch(-SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_DOWN)) {
+		this->camera->increasePitch(SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT)) {
+		this->camera->increaseRoll(SPEED);
+	}
+	if (glfwGetKey(window, GLFW_KEY_RIGHT)) {
+		this->camera->increaseRoll(-SPEED);
+	}
+
+
 }
 
 void GameWorld::update()
