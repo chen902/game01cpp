@@ -39,7 +39,13 @@ int main(void)
 	
 	Entity entity(tm, glm::vec3(0.0f, 0.0f, 0.0f), -55.0f,0.0f,0.0f, 0.5f);
 
-	Camera camera(glm::vec3(0.0f, 0.0f, 30.0f), 1.0f,1.0f,1.0f);
+	RawModel& floor_model = OBJLoader::loadObjModel("res\\floor_tile.obj", loader);
+	ModelTexture& floor_texture = *(new ModelTexture(loader.loadTexture("res\\checker.png")));
+	TexturedModel& floor = *(new TexturedModel(floor_texture, floor_model));
+
+	Entity floor_entity(floor, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, 50.0f);
+
+	Camera camera(glm::vec3(0.0f, 0.5f, 30.0f), 10.0f,0.0f,1.0f);
 
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
@@ -53,6 +59,7 @@ int main(void)
 		shader.loadViewlMatrix(camera);
 
 		renderer.render(entity);
+		renderer.render(floor_entity);
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
 

@@ -23,6 +23,7 @@ public:
 		
 		view = glm::rotate(view, glm::radians(camera.getPitch()), glm::vec3(1.0f, 0.0f, 0.0f));
 		view = glm::rotate(view, glm::radians(camera.getYaw()), glm::vec3(0.0f, 1.0f, 0.0f));
+		view = glm::rotate(view, glm::radians(camera.getRoll()), glm::vec3(0.0f, 0.0f, 1.0f));
 		
 		glm::vec3 pos = camera.getPosition();
 		view = glm::translate(view, glm::vec3(-pos.x, -pos.y, -pos.z));
