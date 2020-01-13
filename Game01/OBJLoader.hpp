@@ -20,6 +20,7 @@ public:
 		std::vector <glm::vec3> vertices;
 		std::vector<unsigned int> indices;
 		std::vector<glm::vec2> textures;
+		std::vector<glm::vec3> normals;
 
 		std::getline(file, line);
 		std::string header = line.substr(0, 2);
@@ -38,57 +39,59 @@ public:
 				textures.push_back(glm::vec2(std::stof(values[0]), std::stof(values[1])));
 			}
 			else if (header == "vn") {
-
+				normals.push_back(glm::vec3(std::stof(values[0]), std::stof(values[1]), std::stof(values[2])));
 			}
 
 			std::getline(file, line);
 			header = line.substr(0, 2);
+			
+			delete[] values;
 		}
 
-		delete[] values;
+		//delete[] values;
 
-		std::string* vertex1 = nullptr;
-		std::string* vertex2 = nullptr;
-		std::string* vertex3 = nullptr;
+		float* textures_arr = new float[vertices.size() * 2];
+		float* normals_arr = new float[vertices.size() * 3];
 
-		do {
-			// "[2/3/4, 4/5/6, 1/2/3]"
-			faces = Utilities::split(' ', line.substr(2, line.length()));
+		while (line != "") {
+			if (header != "f ") {
+				std::getline(file, line);
+				header = line.substr(0, 2);
+				continue;
+			}
+
+			size_t i = line.find(" ");
+			values = Utilities::split(' ', line.substr(i + 1, line.length()));
+
+			std::string* v1 = Utilities::split('/', values[0]);
+			std::string* v2 = Utilities::split('/', values[1]);
+			std::string* v3 = Utilities::split('/', values[2]);
+
+			proccessVertex(v1, indices, textures, normals, textures_arr, normals_arr);
+			proccessVertex(v2, indices, textures, normals, textures_arr, normals_arr);
+			proccessVertex(v3, indices, textures, normals, textures_arr, normals_arr);
+
+			std::getline(file, line);
+			header = line.substr(0, 2);
 			
-			vertex1 = Utilities::split('/', faces[0]);
-			vertex2 = Utilities::split('/', faces[1]);
-			vertex3 = Utilities::split('/', faces[2]);
+			delete[] values;
+		}
 
-			indices.push_back(std::stoi(vertex1[0]) - 1);
-			indices.push_back(std::stoi(vertex2[0]) - 1);
-			indices.push_back(std::stoi(vertex3[0]) - 1);
-
-			delete[] vertex1;
-			delete[] vertex2;
-			delete[] vertex3;
-			delete[] faces;
-
-		} while (std::getline(file, line) && line.substr(0, 2) == "f ");
+		file.close();
 
 		float* vertices_arr = new float[vertices.size() * 3];
 
 		for (size_t i = 0; i < vertices.size(); ++i) {
-			vertices_arr[i * 3] = vertices.at(i).x;
-			vertices_arr[i * 3 + 1] = vertices.at(i).y;
-			vertices_arr[i * 3 + 2] = vertices.at(i).z;
+			glm::vec3 currentVertex = vertices.at(i);
+			vertices_arr[i * 3] = currentVertex.x;
+			vertices_arr[i * 3 + 1] = currentVertex.y;
+			vertices_arr[i * 3 + 2] = currentVertex.z;
 		}
 
 		unsigned int* indices_arr = new unsigned int[indices.size()];
 
 		for (size_t i = 0; i < indices.size(); ++i) {
 			indices_arr[i] = indices.at(i);
-		}
-
-		float* textures_arr = new float[textures.size() * 2];
-
-		for (size_t i = 0; i < textures.size(); ++i) {
-			textures_arr[i*2] = textures.at(i).x;
-			textures_arr[i * 2 + 1] = textures.at(i).y;
 		}
 
 		RawModel& r = loader.loadToVAO(
@@ -102,9 +105,18 @@ public:
 		return r;
 	}
 
-	static void proccessVertex(std::string* currentVertex, std::vector<int>& indices)
+	static void proccessVertex(std::string* currentVertex, std::vector<unsigned int>& indices, std::vector<glm::vec2>& textures, std::vector<glm::vec3>& normals, float* texture_arr, float* normal_arr)
 	{
+		int currentVertexIndex = std::stoi(currentVertex[0]) - 1;
+		indices.push_back(currentVertexIndex);
+		
+		glm::vec2 currentTexture = textures.at(std::stoi(currentVertex[1]) - 1);
+		texture_arr[currentVertexIndex * 2] = currentTexture.x;
+		texture_arr[currentVertexIndex * 2 + 1] = currentTexture.y;
 
-
+		glm::vec3 currentNormal = normals.at(std::stoi(currentVertex[2]) - 1);
+		normal_arr[currentVertexIndex * 3] = currentNormal.x;
+		normal_arr[currentVertexIndex * 3 + 1] = currentNormal.y;
+		normal_arr[currentVertexIndex * 3 + 2] = currentNormal.z;
 	}
 };

@@ -42,7 +42,7 @@ void GameWorld::stop()
 void GameWorld::createEntities()
 {
 	this->camera = new Camera(glm::vec3(0.0f, 0.5f, 30.0f), 10.0f, 0.0f, 1.0f);
-	RawModel& m = OBJLoader::loadObjModel("cube.obj", *this->loader);
+	RawModel& m = OBJLoader::loadObjModel("plane.obj", *this->loader);
 	ModelTexture& t = *(new ModelTexture(this->loader->loadTexture("res\\wall.jpg")));
 
 	TexturedModel& tm = *(new TexturedModel(t, m));
