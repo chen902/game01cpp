@@ -1,76 +1,16 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include "DisplayManager.h"
-#include "Renderer.h"
-#include "ShaderProgram.h"
-#include "Logger.h"
-#include "Loader.h"
-#include "Entity.h"
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include "Camera.h"
-#include "OBJLoader.hpp"
-#include "ModelTexture.h"
-#include "TexturedModel.h"
-
+#include "GameWorld.h"
 
 int main(void)
 {
-	Logger logger = Logger("Main");
-	
-	// handles window opening
-	DisplayManager display;
-	GLFWwindow* window = display.createDisplay();
+	//RawModel& floor_model = OBJLoader::loadObjModel("res\\floor_tile.obj", loader);
+	//ModelTexture& floor_texture = *(new ModelTexture(loader.loadTexture("res\\checker.png")));
+	//TexturedModel& floor = *(new TexturedModel(floor_texture, floor_model));
 
-	// initialize glew
-	GLenum err = glewInit();
+	//Entity floor_entity(floor, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, 50.0f);
+	GameWorld world;
+	world.init();
+	world.run();
 
-	// initialize rendering stuff
-	
-	Loader loader;
-	ShaderProgram shader;
-	Renderer renderer(shader, display);
 
-	RawModel& m = OBJLoader::loadObjModel("cube.obj", loader);
-	ModelTexture& t = *(new ModelTexture(loader.loadTexture("res\\wall.jpg")));
-
-	TexturedModel& tm = *(new TexturedModel(t, m));
-	
-	Entity entity(tm, glm::vec3(0.0f, 0.0f, 0.0f), -55.0f,0.0f,0.0f, 0.5f);
-
-	RawModel& floor_model = OBJLoader::loadObjModel("res\\floor_tile.obj", loader);
-	ModelTexture& floor_texture = *(new ModelTexture(loader.loadTexture("res\\checker.png")));
-	TexturedModel& floor = *(new TexturedModel(floor_texture, floor_model));
-
-	Entity floor_entity(floor, glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 0.0f, 0.0f, 50.0f);
-
-	Camera camera(glm::vec3(0.0f, 0.5f, 30.0f), 10.0f,0.0f,1.0f);
-
-	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
-	{
-		entity.increaseRotation(0.0f, 0.1f, 0.0f);
-
-		shader.startShader();
-		/* Render here */
-		renderer.prepare();
-
-		shader.loadViewlMatrix(camera);
-
-		renderer.render(entity);
-		renderer.render(floor_entity);
-		/* Swap front and back buffers */
-		glfwSwapBuffers(window);
-
-		/* Poll for and process events */
-		glfwPollEvents();
-		shader.stopShader();
-	}
-
-	loader.cleanUp();
-	display.destroyDisplay();
-
-	logger.stop();
 	return 0;
 }
