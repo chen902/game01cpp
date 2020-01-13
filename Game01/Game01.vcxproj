@@ -138,6 +138,8 @@
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="StaticShader.cpp" />
     <ClCompile Include="stb_image.cpp" />
+    <ClCompile Include="Terrain.cpp" />
+    <ClCompile Include="TerrainShader.cpp" />
     <ClCompile Include="TexturedModel.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -159,12 +161,16 @@
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="StaticShader.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="Terrain.h" />
+    <ClInclude Include="TerrainShader.h" />
     <ClInclude Include="TexturedModel.h" />
     <ClInclude Include="Transformations.hpp" />
     <ClInclude Include="Utilities.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="fragmentShader.txt" />
+    <Text Include="terrainFragmentShader.txt" />
+    <Text Include="terrainVertexShader.txt" />
     <Text Include="vertexShader.txt" />
   </ItemGroup>
   <ItemGroup>

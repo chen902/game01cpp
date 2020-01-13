@@ -22,7 +22,8 @@ void GameWorld::init()
 
 	this->loader = new Loader();
 	this->shader = new ShaderProgram();
-	this->renderer = new Renderer(*(this->shader), *(this->display));
+	this->terrainShader = new TerrainShader();
+	this->renderer = new Renderer(*(this->shader), *this->terrainShader, *(this->display));
 
 	this->createEntities();
 }
@@ -41,7 +42,7 @@ void GameWorld::stop()
 
 void GameWorld::createEntities()
 {
-	this->camera = new Camera(glm::vec3(0.0f, 0.5f, 30.0f), 10.0f, 0.0f, 1.0f);
+	this->camera = new Camera(glm::vec3(0.0f, 0.0f, 30.0f), 0.0f, 0.0f, 0.0f);
 	RawModel& m = OBJLoader::loadObjModel("plane.obj", *this->loader);
 	ModelTexture& t = *(new ModelTexture(this->loader->loadTexture("res\\wall.jpg")));
 
@@ -49,6 +50,8 @@ void GameWorld::createEntities()
 
 	this->cube = new Entity(tm, glm::vec3(0.0f, 0.0f, 0.0f), -55.0f, 0.0f, 0.0f, 0.5f);
 
+	//ModelTexture& terrain_texture = *(new ModelTexture(this->loader->loadTexture("res\\wall.jpg")));
+	//this->terrain = new Terrain(0, 0, *this->loader, terrain_texture);
 }
 
 void GameWorld::mainLoop()
@@ -106,21 +109,28 @@ void GameWorld::update()
 
 void GameWorld::render()
 {
-	this->cube->increaseRotation(0.0f, 0.1f, 0.0f);
+	//this->cube->increaseRotation(0.0f, 0.1f, 0.0f);
 
 	this->shader->startShader();
+	//this->terrainShader->startShader();
+
 	/* Render here */
 	this->renderer->prepare();
 
 	this->shader->loadViewlMatrix(*this->camera);
 
 	this->renderer->render(*this->cube);
-	//this->renderer->render(floor_entity);
+
+	
+	//render terrain
+	//this->renderer->render(*this->terrain);
+
 	/* Swap front and back buffers */
 	glfwSwapBuffers(window);
 
 	/* Poll for and process events */
 	glfwPollEvents();
 	this->shader->stopShader();
+	//this->terrainShader->stopShader();
 
 }

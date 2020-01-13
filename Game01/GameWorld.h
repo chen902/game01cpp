@@ -9,6 +9,7 @@
 #include "Renderer.h"
 #include "Camera.h"
 #include "OBJLoader.hpp"
+#include "Terrain.h"
 
 
 class GameWorld
@@ -28,11 +29,14 @@ private:
 	GLFWwindow* window;
 	Loader* loader;
 	ShaderProgram* shader;
+	TerrainShader* terrainShader;
 	Renderer* renderer;
 
 	Camera* camera;
 
 	Entity* cube;
+
+	Terrain* terrain;
 
 	void createEntities();
 	void mainLoop();

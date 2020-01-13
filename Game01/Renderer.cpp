@@ -1,13 +1,19 @@
 #include "Renderer.h"
 
-Renderer::Renderer(ShaderProgram& shader, const DisplayManager& display) : shader(shader), display(display)
+Renderer::Renderer(ShaderProgram& shader, TerrainShader& terrainShader, const DisplayManager& display) : shader(shader), display(display), terrainShader(terrainShader)
 {
 	//glEnable(GL_CULL_FACE);
 	//glCullFace(GL_BACK);
 	creatProjectionMatrix();
 	shader.startShader();
-	loadProjectionMatrix();
+	//loadProjectionMatrix();
+	shader.loadProjectionMatrix(projection);
 	shader.stopShader();
+
+	terrainShader.startShader();
+	terrainShader.loadProjectionMatrix(projection);
+	terrainShader.stopShader();
+
 }
 
 Renderer::~Renderer()
@@ -43,6 +49,31 @@ void Renderer::render(const Entity& entity)
 	glDisableVertexAttribArray(1);
 	glBindVertexArray(0); // unbind vao
 }
+
+void Renderer::render(const Terrain& t)
+{
+
+	//for (Terrain t : terrains) {
+		glBindVertexArray(t.getModel().getVaoID()); // bind vao
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+
+		glm::mat4 trans = Transformations::createTransformationMatrix(glm::vec3(t.getX(), 0.0f, t.getZ()), 0.0f, 0.0f, 0.0f, 1.0f);
+		terrainShader.loadModelMatrix(trans);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, t.getTexture().getTextureID());
+
+		glDrawElements(GL_TRIANGLES, t.getModel().getVerticesCount(), GL_UNSIGNED_INT, 0);
+
+		glDisableVertexAttribArray(0);
+		glDisableVertexAttribArray(1);
+		glBindVertexArray(0); // unbind vao
+
+	//}
+}
+
+
 
 void Renderer::creatProjectionMatrix()
 {

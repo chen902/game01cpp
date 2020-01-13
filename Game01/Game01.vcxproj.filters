@@ -69,6 +69,12 @@
     <ClCompile Include="StaticShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TerrainShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DisplayManager.h">
@@ -134,10 +140,18 @@
     <ClInclude Include="StaticShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TerrainShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="vertexShader.txt" />
     <Text Include="fragmentShader.txt" />
+    <Text Include="terrainFragmentShader.txt" />
+    <Text Include="terrainVertexShader.txt" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game01.rc">
