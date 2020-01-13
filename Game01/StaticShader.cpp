@@ -116,3 +116,8 @@ void StaticShader::loadMatrix(int location, const glm::mat4 & matrix) const
 {
 	glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(matrix));
 }
+
+void StaticShader::loadVec3(int location, glm::vec3 vector) const
+{
+	glUniform3f(location, vector.x, vector.y, vector.z);
+}

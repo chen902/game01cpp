@@ -1,12 +1,28 @@
 #version 400 core
 
 in vec2 TexCoord;
+in vec3 surfaceNormal;
+in vec3 toLightSource;
+
 out vec4 FragColor;
 
 uniform vec4 customColour;
 uniform sampler2D ourTexture;
+uniform vec3 light_color;
 
 void main()
 {
-    FragColor = texture(ourTexture, TexCoord);
+	// surface normal and toLightSource vectors have to be normalized before dot product
+	vec3 unitNormal = normalize(surfaceNormal);
+	vec3 unitLightSource = normalize(toLightSource);
+
+	// determine brightness
+	float nDot = dot(unitNormal, unitLightSource);
+
+	// 0.2 instead of 0.0 makes scene brighter
+	float brightness = max(nDot, 0.2);
+	vec3 diffuseLight = brightness * light_color;
+
+	// combine with texture
+    FragColor = vec4(diffuseLight, 1.0) * texture(ourTexture, TexCoord);
 }

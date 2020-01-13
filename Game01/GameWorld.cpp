@@ -42,14 +42,15 @@ void GameWorld::stop()
 
 void GameWorld::createEntities()
 {
-	this->camera = new Camera(glm::vec3(0.0f, 0.0f, 30.0f), 0.0f, 0.0f, 0.0f);
+	this->camera = new Camera(glm::vec3(0.0f, 10.0f, 0.0f), 10.0f, 0.0f, 0.0f);
 	RawModel& m = OBJLoader::loadObjModel("plane.obj", *this->loader);
 	ModelTexture& t = *(new ModelTexture(this->loader->loadTexture("res\\wall.jpg")));
 
 	TexturedModel& tm = *(new TexturedModel(t, m));
 
-	this->cube = new Entity(tm, glm::vec3(0.0f, 0.0f, 0.0f), -55.0f, 0.0f, 0.0f, 0.5f);
+	this->cube = new Entity(tm, glm::vec3(0.0f, 0.0f, -20.0f), 0.0f, 0.0f, 0.0f, 0.5f);
 
+	this->light = new Light(glm::vec3(10.0f, 10.0f, 0.0f), glm::vec3(1, 1, 1));
 	//ModelTexture& terrain_texture = *(new ModelTexture(this->loader->loadTexture("res\\wall.jpg")));
 	//this->terrain = new Terrain(0, 0, *this->loader, terrain_texture);
 }
@@ -113,7 +114,7 @@ void GameWorld::render()
 
 	this->shader->startShader();
 	//this->terrainShader->startShader();
-
+	this->shader->loadLight(*this->light);
 	/* Render here */
 	this->renderer->prepare();
 

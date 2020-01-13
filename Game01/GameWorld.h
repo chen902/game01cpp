@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "OBJLoader.hpp"
 #include "Terrain.h"
+#include "Light.h"
 
 
 class GameWorld
@@ -37,6 +38,7 @@ private:
 	Entity* cube;
 
 	Terrain* terrain;
+	Light* light;
 
 	void createEntities();
 	void mainLoop();

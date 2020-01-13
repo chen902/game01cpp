@@ -73,5 +73,5 @@ RawModel & Terrain::generateTerrain(Loader& loader)
 	}
 	return loader.loadToVAO(indices, 6 * (VERTEX_COUNT - 1)*(VERTEX_COUNT - 1),
 		vertices, count * 3,
-		textureCoords, count * 2);
+		textureCoords, count * 2, NULL, 0);
 }

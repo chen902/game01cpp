@@ -97,7 +97,8 @@ public:
 		RawModel& r = loader.loadToVAO(
 			indices_arr, sizeof(unsigned int)*indices.size(), 
 			vertices_arr, sizeof(float)*vertices.size()*3, 
-			textures_arr, sizeof(float)*textures.size()*2);
+			textures_arr, sizeof(float)*textures.size()*2,
+			normals_arr, sizeof(float)*normals.size()*3);
 
 		delete[] vertices_arr;
 		delete[] indices_arr;

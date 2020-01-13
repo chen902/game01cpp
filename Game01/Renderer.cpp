@@ -35,6 +35,7 @@ void Renderer::render(const Entity& entity)
 	glBindVertexArray(model.getVaoID()); // bind vao
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(2);
 	
 	// positions the entity in the 3d world
 	glm::mat4 modelMatrix = Transformations::createModelMatrix(entity);
@@ -47,6 +48,7 @@ void Renderer::render(const Entity& entity)
 	
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+	glDisableVertexAttribArray(2);
 	glBindVertexArray(0); // unbind vao
 }
 

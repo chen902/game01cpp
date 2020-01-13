@@ -11,6 +11,7 @@
 #include "Entity.h"
 #include "Transformations.hpp"
 #include "StaticShader.h"
+#include "Light.h"
 
 class ShaderProgram: public StaticShader
 {
@@ -21,6 +22,7 @@ public:
 	void loadModelMatrix(const glm::mat4& matrix) const;
 	void loadProjectionMatrix(const glm::mat4& matrix) const;
 	void getAllUniformLocations();
+	void loadLight(const Light& light);
 
 	//getters
 	unsigned int getProgramID() const { return programID; }
@@ -31,6 +33,8 @@ private:
 	int locationModelMatrix;
 	int locationViewMatrix;
 	int locationProjectionMatrix;
+	int locationLightPosition;
+	int locationLightColor;
 	
 	const char* VERTEX_SHADER_FILE = "vertexShader.txt";
 	const char* FRAGMENT_SHADER_FILE = "fragmentShader.txt";

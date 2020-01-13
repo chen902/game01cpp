@@ -13,7 +13,7 @@ class Loader
 public:
 	~Loader();
 	
-	RawModel& loadToVAO(const unsigned int* indices, size_t indicesSize, const float* vertices, size_t verticesSize, const float* textureCoordinates, size_t textureCoordSize);
+	RawModel& loadToVAO(const unsigned int* indices, size_t indicesSize, const float* vertices, size_t verticesSize, const float* textureCoordinates, size_t textureCoordSize, const float* normals, size_t normalsSize);
 	unsigned int loadTexture(const std::string& filepath);
 	unsigned int createVAO();
 	void bindIndicesBuffer(const unsigned int* indices, size_t indicesSize);

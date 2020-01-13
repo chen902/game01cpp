@@ -41,4 +41,12 @@ void ShaderProgram::getAllUniformLocations()
 	locationModelMatrix = getUniformLocation("model_matrix");
 	locationViewMatrix = getUniformLocation("view_matrix");
 	locationProjectionMatrix = getUniformLocation("projection_matrix");
+	locationLightPosition = getUniformLocation("light_position");
+	locationLightColor = getUniformLocation("light_color");
+}
+
+void ShaderProgram::loadLight(const Light & light)
+{
+	this->loadVec3(this->locationLightPosition, light.getPosition());
+	this->loadVec3(this->locationLightColor, light.getColor());
 }

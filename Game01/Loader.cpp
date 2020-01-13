@@ -4,13 +4,14 @@ Loader::~Loader()
 {
 }
 
-RawModel & Loader::loadToVAO(const unsigned int* indices, size_t indicesSize, const float * vertices, size_t verticesSize, const float* textureCoordinates, size_t textureCoordSize)
+RawModel & Loader::loadToVAO(const unsigned int* indices, size_t indicesSize, const float * vertices, size_t verticesSize, const float* textureCoordinates, size_t textureCoordSize, const float* normals, size_t normalsSize)
 {
 	// create and bind
 	unsigned int vao = createVAO();
 	bindIndicesBuffer(indices, indicesSize);
 	storeDataInAttribList(0, 3, vertices, verticesSize);
 	storeDataInAttribList(1, 2, textureCoordinates, textureCoordSize);
+	storeDataInAttribList(2, 3, normals, normalsSize);
 	unbindVAO();
 	return *(new RawModel(vao, indicesSize / sizeof(unsigned int)));  // indicesSize / sizeof(unsigned int) = actual number of vertices rendered
 }
