@@ -136,6 +136,7 @@
     <ClCompile Include="RawModel.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
+    <ClCompile Include="StaticShader.cpp" />
     <ClCompile Include="stb_image.cpp" />
     <ClCompile Include="TexturedModel.cpp" />
   </ItemGroup>
@@ -156,6 +157,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ShaderProgram.h" />
+    <ClInclude Include="StaticShader.h" />
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="TexturedModel.h" />
     <ClInclude Include="Transformations.hpp" />
