@@ -53,7 +53,7 @@ public:
 		float* textures_arr = new float[vertices.size() * 2];
 		float* normals_arr = new float[vertices.size() * 3];
 
-		while (line != "") {
+		while (line != "" && !file.eof()) {
 			if (header != "f ") {
 				std::getline(file, line);
 				header = line.substr(0, 2);

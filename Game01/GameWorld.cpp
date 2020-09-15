@@ -44,13 +44,13 @@ void GameWorld::createEntities()
 {
 	this->camera = new Camera(glm::vec3(0.0f, 10.0f, 0.0f), 10.0f, 0.0f, 0.0f);
 	RawModel& m = OBJLoader::loadObjModel("plane.obj", *this->loader);
-	ModelTexture& t = *(new ModelTexture(this->loader->loadTexture("res\\paper.jpg")));
+	ModelTexture& t = *(new ModelTexture(this->loader->loadTexture("res\\checker.png")));
 	t.setReflectivity(5.0f);
 	t.setShineDamper(10.f);
 
 	TexturedModel& tm = *(new TexturedModel(t, m));
 
-	this->cube = new Entity(tm, glm::vec3(0.0f, 0.0f, -20.0f), 0.0f, 0.0f, 0.0f, 0.5f);
+	this->cube = new Entity(tm, glm::vec3(0.0f, 10.0f, -20.0f), 0.0f, 0.0f, 0.0f, 0.5f);
 
 	this->light = new Light(glm::vec3(10.0f, 10.0f, 0.0f), glm::vec3(1, 1, 1));
 	//ModelTexture& terrain_texture = *(new ModelTexture(this->loader->loadTexture("res\\wall.jpg")));
@@ -125,7 +125,7 @@ void GameWorld::update()
 
 void GameWorld::render()
 {
-	//this->cube->increaseRotation(0.0f, 0.1f, 0.0f);
+	this->cube->increaseRotation(0.0f, 0.1f, 0.0f);
 
 	this->shader->startShader();
 	//this->terrainShader->startShader();
@@ -136,10 +136,6 @@ void GameWorld::render()
 	this->shader->loadViewlMatrix(*this->camera);
 
 	this->renderer->render(*this->cube);
-
-	
-	//render terrain
-	//this->renderer->render(*this->terrain);
 
 	/* Swap front and back buffers */
 	glfwSwapBuffers(window);
